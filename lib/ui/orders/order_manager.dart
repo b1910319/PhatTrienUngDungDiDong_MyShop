@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:myshop/models/order_item.dart';
-
+// import 'package:myshop/models/order_item.dart';
 import '../../models/cart_item.dart';
-import '../../models/cart_item.dart';
+import '../../models/order_item.dart';
 
 class OrderManager with ChangeNotifier {
   final List<OrderItem> _orders = [
@@ -26,5 +25,17 @@ class OrderManager with ChangeNotifier {
 
   List<OrderItem> get orders {
     return [..._orders];
+  }
+
+  void addOrder(List<CartItem> carProducts, double total) async {
+    _orders.insert(
+        0,
+        OrderItem(
+          id: 'o${DateTime.now().toIso8601String()}',
+          amount: total,
+          products: carProducts,
+          dateTime: DateTime.now(),
+        ));
+    notifyListeners();
   }
 }
